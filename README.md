@@ -1,14 +1,16 @@
 # My Modified Version of 3DGS
+![Teaser image](assets/teaser.png)
 
 ## Todos
 
 - [ ] Intergrate depth, alpha and segmentation rendering
+- [ ] Support few-shot input
 
 ## Added Features
-- Rename rendered image names
+- Mantain rendered image names
 - Log traininig with [wandb](https://wandb.ai/site)
-- Video rendering
 - Depth, alpha and segmentation rendering
+- Video rendering
 
 ## Commands
 
@@ -25,8 +27,38 @@ git clone https://github.com/weijielyu/gaussian-splatting --recursive
 
 ### Environment
 ```
-conda env create --file environment.yml
+conda create -n gs python=3.8 -y
 conda activate gs
+conda install pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 cudatoolkit=11.3 -c pytorch
+pip install -r requirement.txt
+pip install submodules/simple-knn
+```
+- For vanilla Gaussian Splatting rendering:
+```
+pip install submodules/diff-gaussian-rasterization
+```
+- For depth, alpha rendering with confidence:
+```
+pip install submodules/diff-gaussian-rasterization-confidence
+```
+- For segmentation rendering:
+```
+pip install submodules/diff-gaussian-rasterization-gaga
+```
+
+### Colmap
+```
+python convert.py -s <location> --skip_matching [--resize] #If not resizing, ImageMagick is not needed
+```
+
+### Training
+```
+python train.py -s <path to COLMAP or NeRF Synthetic dataset>
+```
+### Evaluation
+```
+python render.py -m <path to pre-trained model> -s <path to COLMAP dataset>
+python metrics.py -m <path to pre-trained model>
 ```
 
 

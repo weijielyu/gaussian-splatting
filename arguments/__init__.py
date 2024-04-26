@@ -89,6 +89,16 @@ class OptimizationParams(ParamGroup):
         self.random_background = False
         super().__init__(parser, "Optimization Parameters")
 
+class RenderParams(ParamGroup):
+    def __init__(self, parser):
+        self.iteration = -1
+        self.skip_train = False
+        self.skip_test = False
+        self.render_depth = False
+        self.render_video = False
+        self.fps = 30
+        super().__init__(parser, "Rendering Parameters")
+
 def get_combined_args(parser : ArgumentParser):
     cmdlne_string = sys.argv[1:]
     cfgfile_string = "Namespace()"
