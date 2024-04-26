@@ -4,7 +4,6 @@
 ## Todos
 
 - [ ] Intergrate depth, alpha and segmentation rendering
-- [ ] Support few-shot input
 
 ## Added Features
 - Mantain rendered image names
