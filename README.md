@@ -68,5 +68,4 @@ This repository is modified based on the following repositories. Thanks for thei
 https://github.com/graphdeco-inria/gaussian-splatting
 https://github.com/VITA-Group/FSGS
 https://github.com/lkeab/gaussian-grouping
-https://github.com/ashawkey/diff-gaussian-rasterization
 ```
