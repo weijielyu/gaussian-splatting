@@ -3,12 +3,12 @@
 
 ## Todos
 
-- [ ] Intergrate depth, alpha and segmentation rendering
+- [ ] Integrate depth, alpha, and segmentation rendering
 
 ## Added Features
-- Mantain rendered image names
-- Log traininig with [wandb](https://wandb.ai/site)
-- Depth, alpha and segmentation rendering
+- Maintain rendered image names
+- Log training with [wandb](https://wandb.ai/site)
+- Depth, alpha, and segmentation rendering
 - Video rendering
 
 ## Commands
