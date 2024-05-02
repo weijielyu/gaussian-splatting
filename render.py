@@ -77,21 +77,21 @@ def render_video_func(source_path, model_path, iteration, views, gaussians, pipe
     final_video.release()
 
 
-def render_sets(dataset : ModelParams, pipeline : PipelineParams, render : RenderParams):
+def render_sets(dataset : ModelParams, pipeline : PipelineParams, render_params : RenderParams):
     with torch.no_grad():
         gaussians = GaussianModel(dataset.sh_degree)
-        scene = Scene(dataset, gaussians, load_iteration=render.iteration, shuffle=False)
+        scene = Scene(dataset, gaussians, load_iteration=render_params.iteration, shuffle=False)
 
         bg_color = [1,1,1] if dataset.white_background else [0, 0, 0]
         background = torch.tensor(bg_color, dtype=torch.float32, device="cuda")
 
-        if not render.skip_train:
-            render_set(dataset.model_path, "train", scene.loaded_iter, scene.getTrainCameras(), gaussians, pipeline, background, render.render_depth)
+        if not render_params.skip_train:
+            render_set(dataset.model_path, "train", scene.loaded_iter, scene.getTrainCameras(), gaussians, pipeline, background, render_params.render_depth)
 
-        if not render.skip_test:
-            render_set(dataset.model_path, "test", scene.loaded_iter, scene.getTestCameras(), gaussians, pipeline, background,  render.render_depth)
+        if not render_params.skip_test:
+            render_set(dataset.model_path, "test", scene.loaded_iter, scene.getTestCameras(), gaussians, pipeline, background,  render_params.render_depth)
 
-        if render.render_video:
+        if render_params.render_video:
             render_video_func(dataset.source_path, dataset.model_path, scene.loaded_iter, scene.getTrainCameras(),
                          gaussians, pipeline, background, args.fps)
 
@@ -101,7 +101,7 @@ if __name__ == "__main__":
     parser = ArgumentParser(description="Testing script parameters")
     model = ModelParams(parser, sentinel=True)
     pipeline = PipelineParams(parser)
-    render = RenderParams(parser)
+    render_params = RenderParams(parser)
     parser.add_argument("--quiet", action="store_true")
     args = get_combined_args(parser)
     print("Rendering " + args.model_path)
@@ -109,4 +109,4 @@ if __name__ == "__main__":
     # Initialize system state (RNG)
     safe_state(args.quiet)
 
-    render_sets(model.extract(args), args.iteration, pipeline.extract(args), render.extract(args))
+    render_sets(model.extract(args), args.iteration, pipeline.extract(args), render_params.extract(args))
